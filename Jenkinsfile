@@ -10,6 +10,14 @@ pipeline {
         name_final = "${name_container}${tag_imagen}${puerto_imagen}"
     }
     stages {
+        stage('test') {
+            steps {
+                script {
+                    sh "npm i && npm cache clean --force"
+                    sh "npm run test:unit"
+                }
+            }
+        }
           stage('stop/rm') {
 
             when {
@@ -22,6 +30,9 @@ pipeline {
                 script{
                     sh ''' 
                          docker stop ${name_final}
+                    '''
+                    sh ''' 
+                         docker rm -f ${name_final}
                     '''
                     }
                 }                                  
