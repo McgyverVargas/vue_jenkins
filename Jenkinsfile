@@ -9,6 +9,9 @@ pipeline {
     environment {
         name_final = "${name_container}${tag_imagen}${puerto_imagen}"
     }
+    tools {
+        nodejs "NodeJS"
+    }
     stages {
         stage('test') {
             steps {
