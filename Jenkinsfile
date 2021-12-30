@@ -16,6 +16,7 @@ pipeline {
         stage('test') {
             steps {
                 script {
+                    sh "npm -v"
                     sh "node -v"
                     sh "npm i && npm cache clean --force"
                     sh "npm run test:unit"
