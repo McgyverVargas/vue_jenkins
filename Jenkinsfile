@@ -72,7 +72,7 @@ pipeline {
             stage('guardando artefacto') {
                 steps {
                     script {
-                        sh 'aws s3 cp --recursive dist/ s3://devexamplevue/dist/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers'
+                        sh 'aws s3 cp --recursive dist/ s3://devexamplevue/dist/ --acl bucket-owner-full-control --recursive'
                     }
                 }
             }
