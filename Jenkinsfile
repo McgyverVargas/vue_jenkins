@@ -26,13 +26,13 @@ pipeline {
         stage('Code Quality Check via SonarQube') {
         steps {
             script {
-            def scannerHome = tool 'sonarqube';
+            def scannerHome = tool 'sonarqube-scanner';
                 withSonarQubeEnv("sonarqube-container") {
-                sh "${tool("sonarqube")}/bin/sonar-scanner \
+                sh "${scannerHome}/bin/sonar-scanner \
                 -Dsonar.projectKey=vue-example-basic \
                 -Dsonar.sources=. \
                 -Dsonar.css.node=. \
-                -Dsonar.host.url=http://44.195.86.32:9000 \
+                -Dsonar.host.url=http://18.215.187.226:9000 \
                 -Dsonar.login=c68b89febe533e31dad0a40f34e180b7c413c0d9"
                     }
                 }
