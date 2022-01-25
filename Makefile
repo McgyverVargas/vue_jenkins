@@ -22,31 +22,31 @@ clone_site:
 
 nodemodules:
 	@printf "\033[0;32mDownload site from remote...\033[0m\n"
-	cd $(NAME_PROJECT) && npm i && npm cache clean --force
+	npm i && npm cache clean --force
 
 test:
 	@printf "\033[0;32mTesting content...\033[0m\n"
-	cd $(NAME_PROJECT) && npm run test:unit
+	npm run test:unit
 
 sonar:
 	@printf "\033[0;32mScanning content...\033[0m\n"
-	cd $(NAME_PROJECT) && ./node_modules/sonarqube-scanner/dist/bin/sonar-scanner
+	./node_modules/sonarqube-scanner/dist/bin/sonar-scanner
 
 create_imagen:
 	@printf "\033[0;32mEliminating content...\033[0m\n"
 	@if [ -z "$(ARCHIVOS)" ]; then echo "\033[0;32mNot Exist content...\033[0m\n"; else docker stop $(NAME_FINAL); docker rm -f $(NAME_FINAL); fi
 	#@if [ -z "$(ARCHIVOS)" ]; then echo "\033[0;32mNot Exist content...\033[0m\n"; else docker rmi -f $(NAME_IMAGEN):$(TAG_IMAGEN); fi
 	@printf "\033[0;32mCreating content...\033[0m\n"
-	cd $(NAME_PROJECT) && docker build -t $(NAME_IMAGEN):$(TAG_IMAGEN) .
+	docker build -t $(NAME_IMAGEN):$(TAG_IMAGEN) .
 
 run_container:
 	@printf "\033[0;32mCreating content...\033[0m\n"
-	cd $(NAME_PROJECT) && docker run -dp $(PUERTO_IMAGEN):80 --name $(NAME_FINAL) $(NAME_IMAGEN):$(TAG_IMAGEN)
+	docker run -dp $(PUERTO_IMAGEN):80 --name $(NAME_FINAL) $(NAME_IMAGEN):$(TAG_IMAGEN)
 
 create_build:
 	@printf "\033[0;32mBuilding content...\033[0m\n"
-	cd $(NAME_PROJECT) && npm run build
+	npm run build
 
 generate_artefact:
 	@printf "\033[0;32mGenerating content...\033[0m\n"
-	cd $(NAME_PROJECT) && aws s3 cp --recursive dist/ s3://devexamplevue/dist/ --acl bucket-owner-full-control --recursive
+	aws s3 cp --recursive dist/ s3://devexamplevue/dist/ --acl bucket-owner-full-control --recursive
